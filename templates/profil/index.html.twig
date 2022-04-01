@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil utilisateur{% endblock %}
+
+{% block body %}
+    <h2>Mes informations</h2>
+    <ul class="list-group">
+        <li class="list-group-item">Identifiant : {{ app.user.id }}</li>
+        <li class="list-group-item">Pseudo : {{ app.user.pseudo }}</li>
+        <li class="list-group-item">Email : {{ app.user.player ? app.user.player.email : "" }}</li>
+        <li class="list-group-item">Mot de passe : *****</li>
+        <li class="list-group-item">Autorisations : 
+            {% for r in app.user.roles %}
+                {% if r == 'ROLE_ADMIN' %}
+                    administrateur
+                {% elseif r == 'ROLE_PLAYER' %}
+                    Joueur
+                {% elseif r =='ROLE_REFEREE' %}
+                    Arbitre
+                {% else %}
+                    Utilisateur
+                {% endif %}
+            {# {% if not loop.last %}
+                ,
+            {% endif %}, ici on va faire une ternaire(cf en-dessous) pour faire apparaître la virgule #} 
+                {{ not loop.last ? ', ':'' }}
+            {% endfor %}    
+        </li>
+    </ul>
+
+{% endblock %}

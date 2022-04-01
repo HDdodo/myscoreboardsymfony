@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GameController!{% endblock %}
+
+{% block body %}
+    <h1>🏸Liste des jeux🥊</h1>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Joueurs min</th>
+                <th>Joueurs max</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for game in games %}
+                <tr>
+                    <td>{{ game.id }}</td>
+                    <td>{{ game.title }}</td>
+                    <td>{{ game.minPlayers }}</td>
+                    <td>{{ game.maxPlayers }}</td>
+                    <td>
+                        <a href="{{ path('app_admin_game_edit', {id: game.id}) }}"><i class="fa fa-edit"></i></a>
+                        <a href="{{ path('app_admin_game_modifier', {title: game.title}) }}"><i class="fa fa-pencil"></i></a>
+                        <a href="{{ path('app_admin_game_delete', {id: game.id}) }}"><i class="fa fa-trash"></i></a>
+                        </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun jeu n'est enregistré</td>
+                </tr>
+            
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {# <h1>Liste des joueurs</h1>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Pseudo</th>
+                <th>Email</th>
+                <th>voir le joueur</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for player in players %}
+                <tr>
+                    <td>{{ player.id }}</td>
+                    <td>{{ player.nickname }}</td>
+                    <td>{{ player.email }}</td>
+                    <td><a href="{{ path('show', { id: player.id }) }}"><button>Voir le joueur</button></a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun joueurs n'est enregistré</td>
+                </tr>
+            
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if player %}
+        <h1>Détail du joueur : pseudo : {{ player.nickname }}, Email : {{ player.email }}</h1>
+    {% endif %} #}
+
+{% endblock %}

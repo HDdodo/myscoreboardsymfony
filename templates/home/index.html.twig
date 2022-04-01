@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <h2>Les gagnants👑</h2>
+    {# EXO : afficher les joueurs gagnants sur la page d'accueuil (dans une balise UL, nickname suivi de l'email entre parenthèses) #}
+    <ul>
+        {% for joueur in gagnants %}
+            <li>{{ joueur.nickname ~ " (" ~ joueur.email ~") " }}</li>
+        {% endfor %}
+    </ul><br>
+
+    <h2>👀Tous les jeux👀</h2>
+
+    <div class="card-columns">
+        {% for jeu in jeux %}
+            {{ include("game/_card.html.twig") }}
+        {% endfor %}
+    </div>
+<hr>
+<p>Il y a <strong>{{nb_joueurs}}</strong> joueurs inscrits dans la base de données</p>
+    
+{% endblock %}
+
+{% block piedpage %}Ceci est le footer de Home{% endblock %}

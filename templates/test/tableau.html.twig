@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<table class="table table-bordered">
+    <tr><td>{{ tableau[0] }}</td></tr>
+    <tr><td>{{ tableau[1] }}</td></tr>
+    <tr><td>{{ tableau[2] }}</td></tr>
+    <tr><td>{{ tableau[3] }}</td></tr>
+</table><hr><hr>
+
+{# au va faire une boucle, pour que ca rende ca dynamique,on lieu de faire le tableau au-dessus #}
+{# dans twig, il n'y a qu'une seule boucle -> for #}
+{# syntaxe de la boucle :
+{% for variable in debut..fin%}
+{%enfor%}
+La variable va passer de la valeur 'debut' et la valeur 'fin' et être incrémentée de 1 à chaque tour#}
+<table class="table table-bordered table-striped">
+    {% for i in 0..3 %}
+        <tr>
+            <td>{{ tableau[i] }}</td>
+        </tr>
+    {% endfor %}
+</table><hr><hr>
+
+{# Ici, on passe le filtre length pour avoir la taille du tableau. Ne pas oublier le -1 ici, sinon c error #}
+<table class="table table-bordered table-striped">
+    {% for i in 0..tableau|length -1 %}
+        <tr>
+            <td>{{ tableau[i] }}</td>
+        </tr>
+    {% endfor %}
+</table><hr><hr>
+
+{# On peut faire des boucles for  #}
+{% for car in 'a'..'z' %}
+    {{ car }}
+{% endfor %}
+<hr>
+{# Equivalent de la boucle php foreach 
+ici, ca nous donne tous les indices du tableau
+en php on met foreach($tableau as $valeur), ici c l'inverse#}
+{% for valeur in tableau %}
+    {{ valeur }}
+{% endfor %}
+<hr><hr>
+{#en PHP: foreach($tableau as $indice => $valeur) 
+avec twig : #}
+{% for indice, valeur in tableau %}
+    <p>{{ indice }} : {{ valeur }}</p>
+{% endfor %}
+
+<br><br><br>
+
+{% endblock %}

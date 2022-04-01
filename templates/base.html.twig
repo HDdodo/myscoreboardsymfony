@@ -6,14 +6,43 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+            {% if is_granted('ROLE_ADMIN')%}
+                {{ encore_entry_link_tags('admin') }}
+            {% else %}
+                {{ encore_entry_link_tags('app') }}
+            {% endif %}
+
         {% endblock %}
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            {% if is_granted('ROLE_ADMIN')%}
+                {{ encore_entry_script_tags('admin') }}
+            {% endif %}
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="container">
+
+            {{ include("menu.html.twig") }}
+
+            {# dans homecontroller : addFlash("success", "La nouvelle partie a bien été enregistrée")
+            msg flash : apparaissent qu'une seule fois, à mettre en session #}
+            {% for type, messages in app.flashes %}
+                {% for msg in messages %}
+                    <div class="alert alert-{{ type }}">{{ msg|raw }}</div>
+                {% endfor %}
+            {% endfor %}
+
+            {# en-dessous : on fait en sorte que le titre n'apparaisse pas partt#}
+            <h1>{% block titreH1 %}My Scoreboard{% endblock %}</h1>
+            {% block body %}{% endblock %}
+        
+            <footer>
+                {% block piedpage %}
+                <p>Ceci est le footer</p>
+                {% endblock %}
+            </footer>
+        </div>
     </body>
 </html>

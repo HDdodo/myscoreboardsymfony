@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    {# <h2>Je m'appelle {{ personne["prenom"]}} {{ personne["nom"]}}</h2> #}
+
+    <hr><hr>
+    {# autre solution plus rapide grâce à twig, et on rajoute une variable #}
+    {# <h2>Je m'appelle {{ personne.prenom}} {{ personne.nom}}, et j'ai {{ personne.age}} ans</h2> #}
+
+    <hr><hr>
+    {# autre méthode encore plus courte à écrire, grâce à la concaténation qui est ~
+    Le point . sert à accéder aux indices d'un tableau ou aux propriétés d'un objet#}
+    <h2>Je m'appelle {{ personne.prenom ~" "~personne.nom}}, et j'ai {{personne.age}} ans</h2>
+
+    <hr><hr>
+
+{% endblock %}

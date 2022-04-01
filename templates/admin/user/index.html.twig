@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block titreH1 %}
+    {{ block("title") }}
+{% endblock %}
+
+{% block body %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Pseudo</th>
+                <th>E-mail</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.pseudo }}</td>
+                {# <td>{{ user.roles ? user.roles|json_encode : '' }}</td> #}
+                {# à la place de ce qu'il y a au-dessus : affichez les rôles en les remplaçants par :
+                    administrateur pour le ROLE_ADMIN
+                    joueur pour le ROLE_PLAYER
+                    arbitre pour le ROLE_REFEREE
+                    utilisateur pour le ROLE_USER (cf template>profil>index, on a fait une condition pour les ≠ role, on refait presque la meme chose endessou#}
+                <td>{{ user.player ? user.player.email : "" }}</td>
+                {# au-dessus : si user.player existe alors on affiche email, sinon on affiche rien #}
+                <td>
+                    {% for r in user.roles %}
+                        {% if r == 'ROLE_ADMIN' %}
+                            administrateur
+                        {% elseif r == 'ROLE_PLAYER' %}
+                            Joueur
+                        {% elseif r =='ROLE_REFEREE' %}
+                            Arbitre
+                        {% else %}
+                            Utilisateur
+                        {% endif %} 
+                        {{ not loop.last ? ', ':'' }}
+                        {# La variable loop existe dans une boucle FOR et contient des informations sur les tours
+                            ex: loop.first (bool)qui veut true si c'est le 1er tour
+                                loop.last (bool) qui veut true si c'est le dernier tour
+                                loop.index (int) qui est égal au tour actuel #}
+                    {% endfor %}
+                </td>
+                <td>*****</td>
+                <td>
+                    <a href="{{ path('app_admin_user_show', {'id': user.id}) }}">
+                        <i class="fa fa-user"></i>
+                        {# show #}
+                    </a>
+                    <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">
+                        <i class="fa fa-edit"></i>
+                   
+                    {# edit #}
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun utilisateur n'est enregistré</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_user_new') }}" class="btn btn-primary">Ajouter un utilisateur</a>
+{% endblock %}
